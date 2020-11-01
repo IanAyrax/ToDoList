@@ -13,6 +13,6 @@ public interface EditContract {
     }
 
     interface Presenter extends BasePresenter {
-        void performLogin(String email, String password);
+        //void performLogin(String email, String password);
     }
 }

@@ -13,13 +13,14 @@
         <!--<meta-data
             android:name="com.google.android.actions" />-->
 
-        <activity android:name=".modul.main.MainActivity">
+        <activity android:name=".modul.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
+        <activity android:name=".modul.main.MainActivity"/>
         <activity android:name=".modul.insert.InsertActivity"/>
         <activity android:name=".modul.edit.EditActivity"/>
     </application>

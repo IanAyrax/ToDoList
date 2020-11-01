@@ -22,8 +22,8 @@ import com.example.todolist.modul.main.MainActivity;
 
 public class InsertFragment extends BaseFragment<InsertActivity, InsertContract.Presenter> implements InsertContract.View {
 
-    EditText etEmail;
-    EditText etPassword;
+    //EditText etEmail;
+    //EditText etPassword;
     Button btnCancel;
 
 
@@ -44,7 +44,7 @@ public class InsertFragment extends BaseFragment<InsertActivity, InsertContract.
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setBtLoginClick();
+                setBtCancelClick();
             }
         });
 
@@ -53,7 +53,7 @@ public class InsertFragment extends BaseFragment<InsertActivity, InsertContract.
         return fragmentView;
     }
 
-    public void setBtLoginClick(){
+    public void setBtCancelClick(){
     //    String email = etEmail.getText().toString();
     //    String password = etPassword.getText().toString();
     //    mPresenter.performLogin(email,password);

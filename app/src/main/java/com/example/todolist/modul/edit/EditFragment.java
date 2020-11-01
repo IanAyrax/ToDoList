@@ -22,8 +22,6 @@ import com.example.todolist.modul.main.MainActivity;
 
 public class EditFragment extends BaseFragment<EditActivity, EditContract.Presenter> implements EditContract.View {
 
-    EditText etEmail;
-    EditText etPassword;
     Button btnCancel;
 
 
