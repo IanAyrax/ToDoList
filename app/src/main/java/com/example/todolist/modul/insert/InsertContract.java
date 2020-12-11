@@ -13,6 +13,7 @@ public interface InsertContract {
     }
 
     interface Presenter extends BasePresenter {
+        void saveData(String title, String description);
         //void performLogin(String email, String password);
     }
 }

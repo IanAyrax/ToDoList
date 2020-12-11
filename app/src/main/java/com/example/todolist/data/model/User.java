@@ -6,11 +6,17 @@ public class User extends BaseModel{
     private String id;
     private String name;
     private String password;
+    private String token;
 
     public User(String id, String title, String description) {
         this.id = id;
         this.name = name;
         this.password = password;
+    }
+
+    public User(String id, String token) {
+        this.id = id;
+        this.token = token;
     }
 
     public String getId() {
@@ -35,5 +41,13 @@ public class User extends BaseModel{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

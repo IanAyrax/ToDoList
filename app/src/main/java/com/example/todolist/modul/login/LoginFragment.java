@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.example.todolist.R;
 import com.example.todolist.base.BaseFragment;
+import com.example.todolist.data.source.session.UserSessionRepositoryRepository;
 import com.example.todolist.modul.main.MainActivity;
 
 
@@ -34,7 +35,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.fragment_login, container, false);
-        mPresenter = new LoginPresenter(this, requireContext());
+        mPresenter = new LoginPresenter(this, requireContext(), new UserSessionRepositoryRepository(getActivity()));
         mPresenter.start();
 
         etEmail = fragmentView.findViewById(R.id.et_email);

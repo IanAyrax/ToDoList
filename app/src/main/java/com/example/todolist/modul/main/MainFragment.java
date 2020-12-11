@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,11 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.todolist.R;
 import com.example.todolist.base.BaseFragment;
 import com.example.todolist.data.model.Task;
+import com.example.todolist.data.source.local.TaskTableHandler;
+import com.example.todolist.data.source.session.TaskSessionRepository;
 import com.example.todolist.modul.edit.EditActivity;
 import com.example.todolist.modul.insert.InsertActivity;
 import com.example.todolist.utils.RecyclerViewAdapterTodolist;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.Console;
 import java.util.ArrayList;
 
 /**
@@ -44,7 +48,7 @@ public class MainFragment extends BaseFragment<MainActivity, MainContract.Presen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.activity_main, container, false);
-        mPresenter = new MainPresenter(this, requireContext());
+        mPresenter = new MainPresenter(this, new TaskSessionRepository(getActivity()), new TaskTableHandler(getActivity()));
         mPresenter.start();
 
         mRecyclerView = fragmentView.findViewById(R.id.rv_id);
@@ -52,32 +56,19 @@ public class MainFragment extends BaseFragment<MainActivity, MainContract.Presen
         mRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
         final ArrayList<Task> data = mPresenter.getDataSet();
+        //Toast.makeText(getActivity(), data.get(0).getId(), Toast.LENGTH_LONG);
         RecyclerViewAdapterTodolist mAdapter = new RecyclerViewAdapterTodolist(data);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new RecyclerViewAdapterTodolist.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                redirectToEdit();
+                String id = data.get(position).getId();
+                redirectToEdit(id);
             }
         });
 
-        //etEmail = fragmentView.findViewById(R.id.et_email);
-        //etPassword = fragmentView.findViewById(R.id.et_password);
-        //btnList = fragmentView.findViewById(R.id.checkBox3);
         btnAdd = fragmentView.findViewById(R.id.addBtn);
-        //btnLogin.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-        //        setBtLoginClick();
-        //    }
-        //});
 
-        //btnList.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-        //        redirectToEdit();
-        //    }
-        //});
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,25 +81,17 @@ public class MainFragment extends BaseFragment<MainActivity, MainContract.Presen
         return fragmentView;
     }
 
-    //public void setBtLoginClick(){
-    //    String email = etEmail.getText().toString();
-    //    String password = etPassword.getText().toString();
-    //    mPresenter.performLogin(email,password);
-    //}
-
-
-
-
     @Override
     public void setPresenter(MainContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
-    public void redirectToEdit() {
-            Intent intent = new Intent(activity, EditActivity.class);
-            startActivity(intent);
-            activity.finish();
+    public void redirectToEdit(String id) {
+        Intent intent = new Intent(activity, EditActivity.class);
+        intent.putExtra("TaskId", id);
+        startActivity(intent);
+        activity.finish();
     }
 
     @Override

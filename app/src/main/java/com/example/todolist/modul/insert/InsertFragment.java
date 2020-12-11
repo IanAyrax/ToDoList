@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 
 import com.example.todolist.R;
 import com.example.todolist.base.BaseFragment;
+import com.example.todolist.data.source.local.TaskTableHandler;
+import com.example.todolist.data.source.session.TaskSessionRepository;
 import com.example.todolist.modul.main.MainActivity;
 //import com.example.todolist.modul.profile.ProfileActivity;
 
@@ -22,10 +24,10 @@ import com.example.todolist.modul.main.MainActivity;
 
 public class InsertFragment extends BaseFragment<InsertActivity, InsertContract.Presenter> implements InsertContract.View {
 
-    //EditText etEmail;
-    //EditText etPassword;
+    EditText etTaskTitle;
+    EditText etTaskDescription;
     Button btnCancel;
-
+    Button btnSave;
 
     public InsertFragment() {
     }
@@ -35,11 +37,12 @@ public class InsertFragment extends BaseFragment<InsertActivity, InsertContract.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.fragment_insert, container, false);
-        mPresenter = new InsertPresenter(this, requireContext());
+        mPresenter = new InsertPresenter(this, new TaskSessionRepository(getActivity()), new TaskTableHandler(getActivity()));
         mPresenter.start();
 
-        //etEmail = fragmentView.findViewById(R.id.et_email);
-        //etPassword = fragmentView.findViewById(R.id.et_password);
+        etTaskTitle = fragmentView.findViewById(R.id.editTextTextTitle);
+        etTaskDescription = fragmentView.findViewById(R.id.editTextTextDescription);
+
         btnCancel = fragmentView.findViewById(R.id.btn_cancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,9 +51,23 @@ public class InsertFragment extends BaseFragment<InsertActivity, InsertContract.
             }
         });
 
+        btnSave = fragmentView.findViewById(R.id.btn_done);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setBtnSaveClick();
+            }
+        });
+
         setTitle("My Insert View");
 
         return fragmentView;
+    }
+
+    public void setBtnSaveClick(){
+        String title = etTaskTitle.getText().toString();
+        String description = etTaskDescription.getText().toString();
+        mPresenter.saveData(title,description);
     }
 
     public void setBtCancelClick(){

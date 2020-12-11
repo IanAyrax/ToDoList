@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public interface MainContract {
     interface View extends BaseView<Presenter> {
-        void redirectToEdit();
+        void redirectToEdit(String id);
         void redirectToInsert();
     }
 
